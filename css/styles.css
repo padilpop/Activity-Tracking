@@ -375,13 +375,20 @@ body {
 }
 
 /* Container for modals and toasts */
-#modalContainer,
-#toastContainer {
+#modalContainer {
   position: fixed;
-  z-index: 999;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#modalContainer .modal-backdrop.active {
+  pointer-events: auto;
 }
 
 #toastContainer {
+  position: fixed;
+  z-index: 999;
   bottom: var(--space-6);
   right: var(--space-6);
   display: flex;

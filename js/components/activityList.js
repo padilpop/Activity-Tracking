@@ -113,7 +113,19 @@ export class ActivityListComponent {
               </svg>
             </div>
             <h4 class="empty-state-title">Belum Ada Aktivitas Hari Ini</h4>
-            <p class="empty-state-subtitle">Mulai stopwatch di atas atau klik tombol <strong>Log Manual</strong> untuk mencatat aktivitas pertamamu!</p>
+            <p class="empty-state-subtitle">Mulai stopwatch di atas atau klik tombol di bawah untuk mencatat aktivitas pertamamu!</p>
+            <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4); flex-wrap: wrap; justify-content: center;">
+              <button class="btn btn-primary" id="emptyStateAddBtn" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>+ Log Aktivitas Manual</span>
+              </button>
+              <button class="btn btn-secondary" id="emptyStateDemoBtn" type="button" title="Isi dengan 3 data aktivitas contoh untuk langsung mencoba fitur dashboard dan chart">
+                <span>⚡ Muat Data Contoh (Demo)</span>
+              </button>
+            </div>
           </div>
         `;
       } else {
@@ -246,6 +258,17 @@ export class ActivityListComponent {
         return;
       }
 
+      // Empty State Buttons
+      if (e.target.closest('#emptyStateAddBtn')) {
+        if (this.modal) this.modal.openCreate();
+        return;
+      }
+
+      if (e.target.closest('#emptyStateDemoBtn')) {
+        await this.loadDemoData();
+        return;
+      }
+
       // Action Button Click
       const actionBtn = e.target.closest('.btn-action');
       if (actionBtn) {
@@ -259,6 +282,46 @@ export class ActivityListComponent {
         }
       }
     });
+  }
+
+  /**
+   * Seeds realistic demo activities for today to instantly test analytics, charts, and feed interactions.
+   */
+  async loadDemoData() {
+    const today = getTodayDateString();
+    const demoItems = [
+      {
+        title: 'Deep Work: Pengerjaan Proyek & Refactor',
+        categoryId: 'cat_work',
+        date: today,
+        startTime: `${today}T09:00:00.000Z`,
+        endTime: `${today}T11:00:00.000Z`,
+        notes: 'Fokus arsitektur clean code dan unit testing.'
+      },
+      {
+        title: 'Belajar ES Modules & Modern Web API',
+        categoryId: 'cat_study',
+        date: today,
+        startTime: `${today}T13:15:00.000Z`,
+        endTime: `${today}T14:30:00.000Z`,
+        notes: 'Mempelajari best practices vanilla JavaScript.'
+      },
+      {
+        title: 'Lari Sore & Kardio Kebugaran',
+        categoryId: 'cat_fitness',
+        date: today,
+        startTime: `${today}T16:30:00.000Z`,
+        endTime: `${today}T17:15:00.000Z`,
+        notes: 'Target 5 km keliling taman kota.'
+      }
+    ];
+
+    for (const item of demoItems) {
+      await activityService.createActivity(item);
+    }
+
+    // Refresh UI across components
+    document.dispatchEvent(new CustomEvent('activity-updated'));
   }
 
   /**

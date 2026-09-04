@@ -337,12 +337,14 @@
   padding: var(--space-4);
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
 }
 
 .modal-backdrop.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .modal-dialog {
