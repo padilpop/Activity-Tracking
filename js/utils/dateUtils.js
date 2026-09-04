@@ -19,6 +19,10 @@ export function formatDigitalTimer(totalSeconds) {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
+// Export alias for digital formatting
+export const formatDurationDigital = formatDigitalTimer;
+
+
 /**
  * Formats a duration in seconds into human-readable Indonesian format.
  * @param {number} totalSeconds 

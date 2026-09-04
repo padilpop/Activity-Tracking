@@ -4,7 +4,7 @@
  */
 
 import { activityService } from '../services/activityService.js';
-import { formatDurationHuman, formatDurationDigital } from '../utils/dateUtils.js';
+import { formatDurationHuman } from '../utils/dateUtils.js';
 
 export class DashboardComponent {
   constructor() {
@@ -39,6 +39,7 @@ export class DashboardComponent {
    * Watches for data-theme changes on documentElement to update chart colors
    */
   _observeThemeChange() {
+    if (typeof MutationObserver === 'undefined') return;
     this.themeObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
