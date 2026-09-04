@@ -1,0 +1,17 @@
+# Vibe Engineering Local Documentation & Workflows
+Vibe Engineering Instruction/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE Directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary & Log Files
+*.log
+scratch/
