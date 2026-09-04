@@ -5,6 +5,7 @@
 
 import { storage } from './services/storage.js';
 import { activityService } from './services/activityService.js';
+import { TimerComponent } from './components/timer.js';
 import { STORAGE_KEYS } from './config.js';
 
 /**
@@ -88,8 +89,8 @@ function initPlaceholders() {
 /**
  * Bootstraps the entire application.
  */
-function bootstrap() {
-  console.log('%c🚀 Activity Tracker Initializing (TASK002: Storage & Service Ready)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
+async function bootstrap() {
+  console.log('%c🚀 Activity Tracker Initializing (TASK003: Live Timer Active)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
   
   // 1. Initialize persistent storage & default categories
   storage.init();
@@ -99,10 +100,15 @@ function bootstrap() {
   initDateDisplay();
   initPlaceholders();
 
+  // 3. Initialize Hero Live Timer Component
+  const timer = new TimerComponent('timerSection');
+  await timer.init();
+
   // Expose services globally for debugging & testing
   window.activityTracker = {
     storage,
-    activityService
+    activityService,
+    timer
   };
 }
 
