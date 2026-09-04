@@ -409,4 +409,24 @@ body {
     padding: var(--space-4) 0 var(--space-8);
     gap: var(--space-5);
   }
+  #toastContainer {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    left: var(--space-4);
+    align-items: center;
+  }
 }
+
+@media (max-width: 480px) {
+  #openManualModalBtn span {
+    display: none; /* Icon-only button on extra small phones */
+  }
+  #openManualModalBtn {
+    padding: 0.55rem 0.65rem;
+    border-radius: var(--radius-full);
+  }
+  .brand-name {
+    font-size: 1.05rem;
+  }
+}
+

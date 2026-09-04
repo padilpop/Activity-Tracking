@@ -1115,5 +1115,144 @@
   }
 }
 
+/* ==========================================================================
+   Responsive Polish, Accessibility & Edge Cases (TASK007)
+   ========================================================================== */
+
+/* --- Mobile Responsiveness & Touch Optimization --- */
+@media (max-width: 640px) {
+  /* Hero Timer Scaling */
+  .hero-timer-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .timer-card-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .timer-digits {
+    font-size: 2.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .timer-controls {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-2);
+  }
+
+  .timer-controls .btn {
+    width: 100%;
+    min-height: 44px; /* Optimal tap target */
+  }
+
+  /* Filter Pills Horizontal Scroll */
+  .filter-pills-row {
+    padding-bottom: var(--space-3);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide scrollbar for cleaner mobile look */
+  }
+
+  .filter-pills-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    flex-shrink: 0;
+    min-height: 38px;
+  }
+
+  /* Activity Card Stack on Mobile */
+  .card-activity {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .activity-main-info {
+    width: 100%;
+  }
+
+  .activity-right-side {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-2);
+    margin-top: var(--space-1);
+  }
+
+  .activity-actions {
+    margin-left: auto;
+  }
+
+  .activity-actions .btn-icon {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Modal on Mobile */
+  .modal-dialog {
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    padding: var(--space-5) var(--space-4);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: var(--space-2);
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* Toast Centered at Bottom */
+  .toast-undo-box {
+    min-width: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Small smartphone screens (< 420px) */
+@media (max-width: 420px) {
+  .timer-digits {
+    font-size: 2.15rem;
+  }
+
+  .timer-title-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+  }
+}
+
+/* Accessibility: High contrast focus rings for keyboard navigation */
+.filter-pill:focus-visible,
+.btn:focus-visible,
+.card-activity:focus-within,
+.search-input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Word break for long activity titles */
+.activity-title {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.activity-notes {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+
 
 
