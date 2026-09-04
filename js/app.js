@@ -3,14 +3,15 @@
  * Handles application lifecycle, theme toggle, and component initialization.
  */
 
-// Storage key for user preferences
-const STORAGE_KEY_THEME = 'activity_tracker_theme';
+import { storage } from './services/storage.js';
+import { activityService } from './services/activityService.js';
+import { STORAGE_KEYS } from './config.js';
 
 /**
  * Initialize theme based on user's saved preference or system default.
  */
 function initTheme() {
-  const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+  const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
   const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'dark'); // Default to dark per Design.md
 
@@ -36,7 +37,7 @@ function applyTheme(theme) {
   }
 
   // Persist preference
-  localStorage.setItem(STORAGE_KEY_THEME, theme);
+  localStorage.setItem(STORAGE_KEYS.THEME, theme);
 }
 
 /**
@@ -88,10 +89,21 @@ function initPlaceholders() {
  * Bootstraps the entire application.
  */
 function bootstrap() {
-  console.log('%c🚀 Activity Tracker Initialized (TASK001)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
+  console.log('%c🚀 Activity Tracker Initializing (TASK002: Storage & Service Ready)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
+  
+  // 1. Initialize persistent storage & default categories
+  storage.init();
+
+  // 2. Initialize UI theme & date
   initTheme();
   initDateDisplay();
   initPlaceholders();
+
+  // Expose services globally for debugging & testing
+  window.activityTracker = {
+    storage,
+    activityService
+  };
 }
 
 // Execute when DOM is ready
@@ -101,4 +113,4 @@ if (document.readyState === 'loading') {
   bootstrap();
 }
 
-export { applyTheme, toggleTheme };
+export { applyTheme, toggleTheme, storage, activityService };
