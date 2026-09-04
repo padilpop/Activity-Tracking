@@ -8,6 +8,7 @@ import { activityService } from './services/activityService.js';
 import { TimerComponent } from './components/timer.js';
 import { ModalComponent } from './components/modal.js';
 import { ActivityListComponent } from './components/activityList.js';
+import { DashboardComponent } from './components/dashboard.js';
 import { STORAGE_KEYS } from './config.js';
 
 /**
@@ -93,7 +94,7 @@ function initHeaderActions(modal) {
  * Bootstraps the entire application.
  */
 async function bootstrap() {
-  console.log('%c🚀 Activity Tracker Initializing (TASK005: Activity Feed & Undo Ready)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
+  console.log('%c🚀 Activity Tracker Initializing (TASK006: Daily Metrics & Chart.js Dashboard Ready)', 'color: #6366f1; font-weight: bold; font-size: 14px;');
   
   // 1. Initialize persistent storage & default categories
   storage.init();
@@ -111,7 +112,11 @@ async function bootstrap() {
   await modal.init();
   initHeaderActions(modal);
 
-  // 5. Initialize Activity Timeline Feed Component
+  // 5. Initialize Daily Metrics & Chart.js Dashboard Component
+  const dashboard = new DashboardComponent();
+  await dashboard.init();
+
+  // 6. Initialize Activity Timeline Feed Component
   const activityList = new ActivityListComponent('feedSection');
   await activityList.init(modal);
 
@@ -121,6 +126,7 @@ async function bootstrap() {
     activityService,
     timer,
     modal,
+    dashboard,
     activityList
   };
 }
