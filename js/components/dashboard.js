@@ -5,6 +5,7 @@
 
 import { activityService } from '../services/activityService.js';
 import { formatDurationHuman } from '../utils/dateUtils.js';
+import { getCategoryIconSvg } from '../config.js';
 
 export class DashboardComponent {
   constructor() {
@@ -89,14 +90,14 @@ export class DashboardComponent {
     let dominantName = 'Belum Ada';
     let dominantSubtext = 'Aktivitas belum tercatat';
     let dominantColor = 'var(--color-primary)';
-    let dominantIcon = '🏆';
+    let dominantIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>`;
 
     if (dominantCategory && dominantCategory.totalSeconds > 0) {
       dominantName = dominantCategory.name;
       const dominantPercent = Math.round((dominantCategory.totalSeconds / totalDurationSeconds) * 100);
       dominantSubtext = `${formatDurationHuman(dominantCategory.totalSeconds)} (${dominantPercent}% dari hari ini)`;
       dominantColor = dominantCategory.color;
-      dominantIcon = dominantCategory.icon || '📌';
+      dominantIconSvg = getCategoryIconSvg(dominantCategory.icon || 'check-circle', 20);
     }
 
     // Card 3: Total Sessions & Average
@@ -131,7 +132,7 @@ export class DashboardComponent {
           <div class="stat-card-header">
             <span class="stat-label">Kategori Dominan</span>
             <div class="stat-icon-wrapper stat-icon-accent" style="background: ${dominantColor}1a; color: ${dominantColor};" aria-hidden="true">
-              <span>${dominantIcon}</span>
+              ${dominantIconSvg}
             </div>
           </div>
           <div class="stat-value" style="color: ${dominantCategory ? dominantColor : 'inherit'};">${dominantName}</div>
@@ -233,7 +234,7 @@ export class DashboardComponent {
                   <div class="breakdown-info">
                     <div class="breakdown-cat-header">
                       <span class="breakdown-color-dot" style="background-color: ${cat.color};"></span>
-                      <span class="breakdown-cat-name">${cat.icon || '📌'} ${cat.name}</span>
+                      <span class="breakdown-cat-name">${getCategoryIconSvg(cat.icon, 14)} ${cat.name}</span>
                     </div>
                     <span class="breakdown-duration">${formatDurationHuman(cat.totalSeconds)}</span>
                   </div>

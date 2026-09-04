@@ -113,8 +113,11 @@ export class ModalComponent {
 
                 <!-- Dynamic Duration Preview Badge -->
                 <div class="duration-preview-card valid" id="durationPreviewBadge">
-                  <span>Kalkulasi Durasi:</span>
-                  <span id="durationPreviewText">1j 0m</span>
+                  <div class="duration-preview-label">
+                    <span id="durationPreviewIcon" aria-hidden="true">⏱️</span>
+                    <span id="durationLabelText">Kalkulasi Durasi:</span>
+                  </div>
+                  <span id="durationPreviewText" class="duration-preview-val">1j 0m</span>
                 </div>
 
                 <!-- Notes Field -->
@@ -164,6 +167,8 @@ export class ModalComponent {
     this.notesInput = document.getElementById('modalNotes');
     this.durationBadge = document.getElementById('durationPreviewBadge');
     this.durationText = document.getElementById('durationPreviewText');
+    this.durationLabelText = document.getElementById('durationLabelText');
+    this.durationPreviewIcon = document.getElementById('durationPreviewIcon');
     this.submitBtn = document.getElementById('modalSubmitBtn');
     this.modalTitle = document.getElementById('modalDialogTitle');
 
@@ -262,6 +267,8 @@ export class ModalComponent {
 
     if (!dateStr || !startStr || !endStr) {
       this.durationBadge.className = 'duration-preview-card';
+      if (this.durationPreviewIcon) this.durationPreviewIcon.textContent = 'ℹ️';
+      if (this.durationLabelText) this.durationLabelText.textContent = 'Status:';
       this.durationText.textContent = 'Lengkapi jam mulai & selesai';
       this.submitBtn.disabled = true;
       return 0;
@@ -274,16 +281,22 @@ export class ModalComponent {
     if (durationSeconds < 0) {
       // BR001 violation
       this.durationBadge.className = 'duration-preview-card invalid';
+      if (this.durationPreviewIcon) this.durationPreviewIcon.textContent = '⚠️';
+      if (this.durationLabelText) this.durationLabelText.textContent = 'Peringatan:';
       this.durationText.textContent = 'Waktu selesai tidak boleh lebih awal dari waktu mulai!';
       this.submitBtn.disabled = true;
       return durationSeconds;
     } else if (durationSeconds === 0) {
       this.durationBadge.className = 'duration-preview-card invalid';
+      if (this.durationPreviewIcon) this.durationPreviewIcon.textContent = '⚠️';
+      if (this.durationLabelText) this.durationLabelText.textContent = 'Peringatan:';
       this.durationText.textContent = 'Durasi aktivitas minimal 1 menit.';
       this.submitBtn.disabled = true;
       return 0;
     } else {
       this.durationBadge.className = 'duration-preview-card valid';
+      if (this.durationPreviewIcon) this.durationPreviewIcon.textContent = '⏱️';
+      if (this.durationLabelText) this.durationLabelText.textContent = 'Kalkulasi Durasi:';
       this.durationText.textContent = formatDurationHuman(durationSeconds);
       this.submitBtn.disabled = false;
       return durationSeconds;
